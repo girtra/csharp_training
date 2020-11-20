@@ -11,10 +11,12 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : LoginLogoutHelper
+    public class GroupCreationTests
     {
         private StringBuilder verificationErrors;
         private bool acceptNextAlert = true;
+        public IWebDriver driver = new ChromeDriver();
+        public string baseURL;
 
         [SetUp]
         public void SetupTest()
@@ -51,7 +53,20 @@ namespace WebAddressbookTests
             SubmitGroupCreation();
             ReturnToGroupsPage();
         }
-        private void ReturnToGroupsPage()
+        public void Login(AccountData accountData)
+        {
+            driver.FindElement(By.Name("user")).Clear();
+            driver.FindElement(By.Name("user")).SendKeys(accountData.Username);
+            driver.FindElement(By.Name("pass")).Click();
+            driver.FindElement(By.Name("pass")).Clear();
+            driver.FindElement(By.Name("pass")).SendKeys(accountData.Password);
+            driver.FindElement(By.XPath("//input[@value='Login']")).Click();
+        }
+        public void OpenHomePage()
+        {
+            driver.Navigate().GoToUrl(baseURL);
+        }
+         private void ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
             driver.FindElement(By.LinkText("Logout")).Click();
