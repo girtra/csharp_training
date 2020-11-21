@@ -4,26 +4,21 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 
-namespace WebAddressbookTests 
+namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : TestBase
+    public class GroupRemovalTests : TestBase
     {
         [Test]
-        public void GroupCreationTest()
+        public void GroupRemovalTest()
         {
             navigator.GoToHomePage();
             loginHelper.Login(new AccountData("admin", "secret"));
             navigator.GoToGroupsPage();
-            groupHalper.InitGroupCreation();
-            GroupData group = new GroupData("test3");
-            group.Header = "3";
-            group.Footer = "33";
-            groupHalper.FillGroupForm(group);
-            groupHalper.SubmitGroupCreation();
+            groupHalper.SelectGroup(1);
+            groupHalper.RemoveGroup();
             groupHalper.ReturnToGroupsPage();
             loginHelper.Logout();
-        }       
+        }
     }
 }
-
