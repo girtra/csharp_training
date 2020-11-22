@@ -21,16 +21,25 @@ namespace WebAddressbookTests
 
         public ApplicationManager()
         {
-            loginHelper = new LoginHelper(driver);
-            navigator = new NavigationHelper(driver, baseURL);
-            groupHalper = new GroupHalper(driver);
-            contactHelper = new ContactHelper(driver);
-
             driver = new ChromeDriver();
             baseURL = "http://localhost/addressbook/";
+
+            loginHelper = new LoginHelper(this);
+            navigator = new NavigationHelper(this, baseURL);
+            groupHalper = new GroupHalper(this);
+            contactHelper = new ContactHelper(this);
+        }
+
+        public IWebDriver Driver 
+        {
+            get
+            {
+                return driver;
+            } 
         }
 
         public void Stop()
+
         {
             try
             {
@@ -73,5 +82,6 @@ namespace WebAddressbookTests
                 return contactHelper;
             }
         }
+
     }
 }

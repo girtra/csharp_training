@@ -11,15 +11,35 @@ namespace WebAddressbookTests
 {
     public class GroupHalper : HelperBase
     {
-        public GroupHalper(IWebDriver driver) 
-            : base(driver)
+        public GroupHalper(ApplicationManager manager) 
+            : base(manager)
         {
         }
-        public void InitGroupCreation()
+
+        public GroupHalper Create(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            InitGroupCreation();
+            FillGroupForm(group);
+            SubmitGroupCreation();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+        public GroupHalper Remove(int index)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(index);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            return this;
+        }
+        public GroupHalper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
+            return this;
         }
-        public void FillGroupForm(GroupData group)
+        public GroupHalper FillGroupForm(GroupData group)
         {
             driver.FindElement(By.Name("group_name")).Click();
             driver.FindElement(By.Name("group_name")).Clear();
@@ -30,22 +50,27 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("group_footer")).Click();
             driver.FindElement(By.Name("group_footer")).Clear();
             driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+            return this;
         }
-        public void SubmitGroupCreation()
+        public GroupHalper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            return this;
         }
-        public void SelectGroup(int index)
+        public GroupHalper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
         }
-        public void RemoveGroup()
+        public GroupHalper RemoveGroup()
         {
             driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
+            return this;
         }
-        public void ReturnToGroupsPage()
+        public GroupHalper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
-        }          
+            return this;
+        }
     }
 }
