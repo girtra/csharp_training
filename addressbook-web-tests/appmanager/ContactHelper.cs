@@ -23,6 +23,67 @@ namespace WebAddressbookTests
             SubmitContactCreation();
             ReturnToHomePage();
             return this;
+        }       
+
+        public ContactHelper Modify(int index, ContactData newContactData)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(index);
+            InitContactModification(index);
+            FillContactForm(newContactData);
+            SubmitContactModification();
+            ReturnToHomePage();
+            return this;
+        }
+        public ContactHelper Remove(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(index);
+            InitContactDeletion();
+            SubmitContactDeletion();
+            return this;
+        }
+        public ContactHelper RemoveFromEditForm(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(index);
+            InitContactModification(index);
+            InitContactDeletion();
+            return this;
+        }
+
+
+
+
+
+        private ContactHelper SubmitContactDeletion()
+        {
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper InitContactDeletion()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this; ;
+        }
+
+        public ContactHelper InitContactModification(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
         }
 
         public ContactHelper InitContactCreation()
@@ -36,9 +97,9 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contactData.Firstname);
-            /*driver.FindElement(By.Name("middlename")).Click();
+            driver.FindElement(By.Name("middlename")).Click();
             driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys("Middle_name");*/
+            driver.FindElement(By.Name("middlename")).SendKeys(contactData.Middlename);
             driver.FindElement(By.Name("lastname")).Click();
             driver.FindElement(By.Name("lastname")).Clear();
             driver.FindElement(By.Name("lastname")).SendKeys(contactData.Lastname);
