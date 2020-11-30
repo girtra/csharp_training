@@ -29,22 +29,35 @@ namespace WebAddressbookTests
         public GroupHalper Modify(int index, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
+            IsGroupPresent();
             SelectGroup(index);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
             ReturnToGroupsPage();
             return this;
-        }       
-
+        }
+               
         public GroupHalper Remove(int index)
         {
             manager.Navigator.GoToGroupsPage();
+            IsGroupPresent();
             SelectGroup(index);
             RemoveGroup();
             ReturnToGroupsPage();
             return this;
         }
+
+        public GroupHalper IsGroupPresent()
+        {
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            {
+                GroupData group = new GroupData("1");
+                Create(group);
+            }
+            return this;
+        }
+
         public GroupHalper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
@@ -52,17 +65,13 @@ namespace WebAddressbookTests
         }
         public GroupHalper FillGroupForm(GroupData group)
         {
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Click();
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+            Type(By.Name("group_name"), group.Name);
+            Type(By.Name("group_header"), group.Header);
+            Type(By.Name("group_footer"), group.Footer);
+
             return this;
         }
+
         public GroupHalper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
