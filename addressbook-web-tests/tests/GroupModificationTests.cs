@@ -15,8 +15,13 @@ namespace WebAddressbookTests
         {
             GroupData newData = new GroupData("eee5");
             newData.Header = null;
-            newData.Footer = "new5";
+            newData.Footer = "new5";          
 
+            if (!app.Groups.IsGroupPresent()) 
+            {
+                GroupData defData = new GroupData("def");
+                app.Groups.Create(defData);
+            }
             app.Groups.Modify(1, newData);
         }
     }

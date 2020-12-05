@@ -18,6 +18,11 @@ namespace WebAddressbookTests
             newContactData.Middlename = "newMiddlename";
 
 
+            if(!app.Contacts.IsContactPresent())
+            {
+                ContactData defContactData = new ContactData("def");
+                app.Contacts.Create(defContactData);
+            }
             app.Contacts.Modify(1, newContactData);
         }
     }

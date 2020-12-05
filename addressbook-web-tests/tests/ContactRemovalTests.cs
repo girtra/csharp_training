@@ -13,12 +13,22 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
+            if (!app.Contacts.IsContactPresent())
+            {
+                ContactData defContactData = new ContactData("def");
+                app.Contacts.Create(defContactData);
+            }
             app.Contacts.Remove(1);
         }
 
         [Test]
         public void ContactRemovalTestFromEditForm()
         {
+            if (!app.Contacts.IsContactPresent())
+            {
+                ContactData defContactData = new ContactData("def");
+                app.Contacts.Create(defContactData);
+            }
             app.Contacts.RemoveFromEditForm(1);
         }
     }

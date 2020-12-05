@@ -29,7 +29,6 @@ namespace WebAddressbookTests
         public GroupHalper Modify(int index, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            IsGroupPresent();
             SelectGroup(index);
             InitGroupModification();
             FillGroupForm(newData);
@@ -41,21 +40,16 @@ namespace WebAddressbookTests
         public GroupHalper Remove(int index)
         {
             manager.Navigator.GoToGroupsPage();
-            IsGroupPresent();
             SelectGroup(index);
             RemoveGroup();
             ReturnToGroupsPage();
             return this;
         }
 
-        public GroupHalper IsGroupPresent()
+        public bool IsGroupPresent()
         {
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
-            {
-                GroupData group = new GroupData("1");
-                Create(group);
-            }
-            return this;
+            manager.Navigator.GoToGroupsPage();
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));            
         }
 
         public GroupHalper InitGroupCreation()

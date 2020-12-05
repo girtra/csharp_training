@@ -28,7 +28,6 @@ namespace WebAddressbookTests
         public ContactHelper Modify(int index, ContactData newContactData)
         {
             manager.Navigator.GoToHomePage();
-            IsContactPresent();
             SelectContact(index);
             InitContactModification(index);
             FillContactForm(newContactData);
@@ -39,7 +38,6 @@ namespace WebAddressbookTests
         public ContactHelper Remove(int index)
         {
             manager.Navigator.GoToHomePage();
-            IsContactPresent();
             SelectContact(index);
             InitContactDeletion();
             SubmitContactDeletion();
@@ -48,7 +46,6 @@ namespace WebAddressbookTests
         public ContactHelper RemoveFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();
-            IsContactPresent();
             SelectContact(index);
             InitContactModification(index);
             InitContactDeletion();
@@ -85,14 +82,10 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper IsContactPresent()
+        public bool IsContactPresent()
         {
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
-            {
-                ContactData data = new ContactData("1");
-                Create(data);
-            }
-            return this;
+            manager.Navigator.GoToHomePage();
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));
         }
         public ContactHelper InitContactCreation()
         {
