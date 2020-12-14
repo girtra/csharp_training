@@ -11,7 +11,7 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(ApplicationManager manager) 
+        public ContactHelper(ApplicationManager manager)
             : base(manager)
         {
         }
@@ -23,13 +23,36 @@ namespace WebAddressbookTests
             SubmitContactCreation();
             ReturnToHomePage();
             return this;
-        }       
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry] td~td:nth-child(-n+3)"));
+            for (int i = 0; i< elements.Count(); i++)
+            {
+                ContactData contact = new ContactData(elements.ElementAt(i).Text);
+                contact.Lastname = elements.ElementAt(i+1).Text;
+                contacts.Add(contact);
+                i++;
+            }
+            return contacts;
+        }
+
+        public ContactData GetContact(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            ContactData contact = new ContactData(driver.FindElement(By.CssSelector("tr[name=entry] td:nth-child(index + 1)")).Text);
+            return contact;
+        }
 
         public ContactHelper Modify(int index, ContactData newContactData)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(index);
-            InitContactModification(index);
+            SelectContact(index + 1);
+            InitContactModification(index + 1);
             FillContactForm(newContactData);
             SubmitContactModification();
             ReturnToHomePage();
@@ -38,7 +61,7 @@ namespace WebAddressbookTests
         public ContactHelper Remove(int index)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(index);
+            SelectContact(index + 1);
             InitContactDeletion();
             SubmitContactDeletion();
             return this;
@@ -46,12 +69,12 @@ namespace WebAddressbookTests
         public ContactHelper RemoveFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(index);
-            InitContactModification(index);
+            SelectContact(index + 1);
+            InitContactModification(index + 1);
             InitContactDeletion();
             return this;
         }
-                             
+
         private ContactHelper SubmitContactDeletion()
         {
             driver.SwitchTo().Alert().Accept();

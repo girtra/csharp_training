@@ -13,12 +13,20 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
+
             if (!app.Contacts.IsContactPresent())
             {
                 ContactData defContactData = new ContactData("def");
                 app.Contacts.Create(defContactData);
             }
-            app.Contacts.Remove(1);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            app.Contacts.Remove(0);
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.RemoveAt(0);
+            newContacts.Sort();
+            oldContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]
@@ -29,7 +37,16 @@ namespace WebAddressbookTests
                 ContactData defContactData = new ContactData("def");
                 app.Contacts.Create(defContactData);
             }
-            app.Contacts.RemoveFromEditForm(1);
+
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            app.Contacts.RemoveFromEditForm(0);
+            app.Navigator.GoToHomePage();
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.RemoveAt(0);
+            newContacts.Sort();
+            oldContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
