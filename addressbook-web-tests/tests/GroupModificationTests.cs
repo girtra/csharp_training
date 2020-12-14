@@ -21,13 +21,12 @@ namespace WebAddressbookTests
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-            GroupData newData = new GroupData("eee5");
+            GroupData newData = new GroupData("ee99e5");
             newData.Header = null;
             newData.Footer = "new5";
             app.Groups.Modify(0, newData);
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
-            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
             oldGroups[0] = newData;
             newGroups.Sort();
             oldGroups.Sort();

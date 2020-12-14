@@ -33,9 +33,10 @@ namespace WebAddressbookTests
             ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry] td~td:nth-child(-n+3)"));
             for (int i = 0; i< elements.Count(); i++)
             {
-                ContactData contact = new ContactData(elements.ElementAt(i).Text);
-                contact.Lastname = elements.ElementAt(i+1).Text;
-                contacts.Add(contact);
+                ContactData contact = new ContactData(" ");                
+                contact.Lastname = elements.ElementAt(i).Text;
+                contact.Firstname = elements.ElementAt(i+1).Text;
+            contacts.Add(contact);
                 i++;
             }
             return contacts;
