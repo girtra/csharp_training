@@ -10,7 +10,7 @@ namespace WebAddressbookTests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
-
+        private string fullName;
         public ContactData (string firstname)
         {
             Firstname = firstname;
@@ -45,6 +45,21 @@ namespace WebAddressbookTests
             }
         }
 
+        public string FullName
+        {
+            get
+            {
+                if (fullName != null)
+                {
+                    return fullName;
+                }
+                return Regex.Replace((Firstname + " " + Middlename + " " + Lastname).Trim(), @"\s+", " ");
+            }
+            set
+            {
+                fullName = value;
+            }
+        }
         private string CleanUp(string phone)
         {
             if (phone == null || phone == "")

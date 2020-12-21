@@ -11,7 +11,7 @@ namespace WebAddressbookTests
     public class ContactInformationTests : AuthTestBase
     {
         [Test]
-        public void ContactInformationTest()
+        public void ContactInformationTestFromEditFormAndTable()
         {
             ContactData fromTable = app.Contacts.GetContactInformationFromTable(0);
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
@@ -19,6 +19,26 @@ namespace WebAddressbookTests
             Assert.AreEqual(fromTable, fromForm);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
             Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
+        }
+
+        [Test]
+        public void ContactInformationTestFromEditFormAndDetailsCard()
+        {
+            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(3);
+            string[] infofromDetailsCard = app.Contacts.GetContactInfoFromDetailsCard(3);
+            var contactDictionaryFromEditForm = app.Contacts.ConvertContactDataToDictionary(fromForm);
+            
+            int i = 0;
+            foreach (var element in contactDictionaryFromEditForm)
+            {
+                if (!string.IsNullOrEmpty(element.Value))
+                {                    
+                    Assert.AreEqual(element.Value, infofromDetailsCard[i]);
+                    i++;
+                }
+            }
+            //check if there is additional information in contact details card
+            Assert.IsTrue(i == infofromDetailsCard.Length);
         }
     }
 }
