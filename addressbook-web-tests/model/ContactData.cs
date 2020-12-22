@@ -11,11 +11,12 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string fullName;
-        public ContactData (string firstname)
+        private string allEmails;
+        public ContactData(string firstname)
         {
             Firstname = firstname;
         }
-        public ContactData (string firstname, string lastname)
+        public ContactData(string firstname, string lastname)
         {
             Firstname = firstname;
             Lastname = lastname;
@@ -28,6 +29,10 @@ namespace WebAddressbookTests
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
+        public string Email {get; set;}
+        public string Email2 {get; set;}
+        public string Email3 {get; set;}
+
         public string AllPhones
         {
             get
@@ -45,6 +50,30 @@ namespace WebAddressbookTests
             }
         }
 
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }              
+                return emailFormating(Email) + emailFormating(Email2) + emailFormating(Email3).Trim();
+            }
+            set
+            {
+                allEmails = value;
+            }
+        }
+        public string emailFormating(string email)
+        {
+            if(string.IsNullOrEmpty(email))
+            {
+                return "";
+            }
+            return email + "\r\n";
+
+        }
         public string FullName
         {
             get

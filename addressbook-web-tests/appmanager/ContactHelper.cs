@@ -26,12 +26,14 @@ namespace WebAddressbookTests
             string lastName = sells[1].Text;
             string firstName = sells[2].Text;
             string address = sells[3].Text;
+            string emails = sells[4].Text;
             string phones = sells[5].Text;
 
             return new ContactData(firstName, lastName)
             {
                 Address = address,
-                HomePhone = phones
+                AllEmails = emails,
+                AllPhones = phones
             };
 
         }
@@ -82,6 +84,10 @@ namespace WebAddressbookTests
             string middlename = driver.FindElement(By.Name("middlename")).GetAttribute("value").Trim();
 
             string address = driver.FindElement(By.Name("address")).GetAttribute("value").Trim();
+
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value").Trim();
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value").Trim();
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value").Trim();
             
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value").Trim();
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value").Trim();
@@ -91,6 +97,9 @@ namespace WebAddressbookTests
             {
                 Middlename = middlename,
                 Address = address,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone
