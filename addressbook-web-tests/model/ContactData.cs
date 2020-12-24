@@ -130,5 +130,12 @@ namespace WebAddressbookTests
         {
             return (Firstname.GetHashCode() + Lastname.GetHashCode());
         }
+
+        public override string ToString()
+        {
+            return " Firstname= " + Firstname + "\n Lastname= " + Lastname 
+                + "\n Address= " + Address + "\n Email= " + Email 
+                + "\n AllPhones= " + AllPhones;
+        }
     }
 }

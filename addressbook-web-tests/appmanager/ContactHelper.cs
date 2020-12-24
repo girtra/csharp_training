@@ -222,6 +222,13 @@ namespace WebAddressbookTests
             Type(By.Name("firstname"), contactData.Firstname);
             Type(By.Name("middlename"), contactData.Middlename);
             Type(By.Name("lastname"), contactData.Lastname);
+            Type(By.Name("address"), contactData.Address);
+            Type(By.Name("home"), contactData.HomePhone);
+            Type(By.Name("mobile"), contactData.MobilePhone);
+            Type(By.Name("work"), contactData.WorkPhone);
+            Type(By.Name("email"), contactData.Email);
+            Type(By.Name("email2"), contactData.Email2);
+            Type(By.Name("email3"), contactData.Email3);
             return this;
         }
         public ContactHelper SubmitContactCreation()
