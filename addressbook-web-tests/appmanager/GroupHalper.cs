@@ -27,10 +27,12 @@ namespace WebAddressbookTests
             return this;
         }
 
+
         public int GetGroupCount()
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
+       
         public List<GroupData> GetGroupList()
         {
             if (groupCache == null)
@@ -72,7 +74,18 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
             return this;
         }
-               
+
+        public GroupHalper Modify(string id, GroupData newData)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(id);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
         public GroupHalper Remove(int index)
         {
             manager.Navigator.GoToGroupsPage();
@@ -82,6 +95,16 @@ namespace WebAddressbookTests
             return this;
         }
 
+
+        public GroupHalper Remove(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(group.Id);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            return this;
+        }
+               
         public bool IsGroupPresent()
         {
             manager.Navigator.GoToGroupsPage();
@@ -113,6 +136,13 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
+
+        public GroupHalper SelectGroup(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value = '"+ id +"'])")).Click();
+            return this;
+        }
+
         public GroupHalper RemoveGroup()
         {
             driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
