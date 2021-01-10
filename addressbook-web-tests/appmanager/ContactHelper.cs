@@ -37,6 +37,7 @@ namespace WebAddressbookTests
             };
 
         }
+              
 
         public Dictionary<int, string> ConvertContactDataToDictionary(ContactData fromForm)
         {
@@ -58,6 +59,7 @@ namespace WebAddressbookTests
             }
             return dictionary;
         }
+
 
         public string[] GetContactInfoFromDetailsCard(int index)
         {
@@ -153,6 +155,18 @@ namespace WebAddressbookTests
             ReturnToHomePage();
             return this;
         }
+
+        public ContactHelper Modify(string id, ContactData newContactData)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(id);
+            InitContactModification(id);
+            FillContactForm(newContactData);
+            SubmitContactModification();
+            ReturnToHomePage();
+            return this;
+        }
+
         public ContactHelper Remove(int index)
         {
             manager.Navigator.GoToHomePage();
@@ -161,11 +175,31 @@ namespace WebAddressbookTests
             SubmitContactDeletion();
             return this;
         }
+
+        public ContactHelper Remove(ContactData toBeRemoved)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(toBeRemoved.Id);
+            InitContactDeletion();
+            SubmitContactDeletion();
+            return this;
+        }
+
         public ContactHelper RemoveFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();
             SelectContact(index + 1);
             InitContactModification(index + 1);
+            InitContactDeletion();
+            return this;
+        }
+
+
+        public ContactHelper RemoveFromEditForm(ContactData toBeRemoved)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(toBeRemoved.Id);
+            InitContactModification(toBeRemoved.Id);
             InitContactDeletion();
             return this;
         }
@@ -200,9 +234,22 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper InitContactModification(string id)
+        {
+            driver.FindElements(By.CssSelector("a[href *= '"+ id +"']"))[1].Click();
+            return this;
+        }
+
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+
+
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value = '" + id + "'])")).Click();
             return this;
         }
 
