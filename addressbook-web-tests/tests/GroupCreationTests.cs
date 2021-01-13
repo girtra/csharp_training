@@ -103,19 +103,26 @@ namespace WebAddressbookTests
         [Test]
         public void TestDBConnectivity()
         {
-            DateTime start = DateTime.Now;
-            List<GroupData>  fromUi = app.Groups.GetGroupList();
-            DateTime end = DateTime.Now;
-            System.Console.Out.WriteLine("fromUi: " + end.Subtract(start));
-            
-            start = DateTime.Now;
+            //DateTime start = DateTime.Now;
+            //List<GroupData>  fromUi = app.Groups.GetGroupList();
+            //DateTime end = DateTime.Now;
+            //System.Console.Out.WriteLine("fromUi: " + end.Subtract(start));
 
-            List<GroupData> fromDb = GroupData.GetAll();
-            end = DateTime.Now;
-            System.Console.Out.WriteLine("fromDb: " + end.Subtract(start));
-            foreach (var element in fromDb)
+            //start = DateTime.Now;
+
+            //List<GroupData> fromDb = GroupData.GetAll();
+            //end = DateTime.Now;
+            //System.Console.Out.WriteLine("fromDb: " + end.Subtract(start));
+            //foreach (var element in fromDb)
+            //{
+            //    System.Console.Out.Write(element.ToString());
+            //}
+
+            GroupData groups = new GroupData();
+            
+            foreach (var element in groups.GetGroupWithContacts())
             {
-                System.Console.Out.Write(element.ToString());
+                System.Console.Out.Write(element);
             }
         }
     }

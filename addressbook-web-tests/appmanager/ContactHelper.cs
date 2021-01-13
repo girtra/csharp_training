@@ -37,8 +37,7 @@ namespace WebAddressbookTests
             };
 
         }
-              
-
+        
         public Dictionary<int, string> ConvertContactDataToDictionary(ContactData fromForm)
         {
             var dictionary = new Dictionary<int, string>();
@@ -143,6 +142,54 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             ContactData contact = new ContactData(driver.FindElement(By.CssSelector("tr[name=entry] td:nth-child(index + 1)")).Text);
             return contact;
+        }
+
+
+        public ContactHelper AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+
+            return this;
+        }
+
+        public void RemoveContactFromGroup(GroupData group, ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupFromFilter(group);
+            SelectContact(contact.Id);
+            SubmitContactRemovingFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+               .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void SubmitContactRemovingFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        public void SelectGroupFromFilter(GroupData group)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(group.Name);
+        }
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
         }
 
         public ContactHelper Modify(int index, ContactData newContactData)
