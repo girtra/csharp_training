@@ -12,9 +12,22 @@ namespace WebAddressbookTests
         [Test]
         public void AddingContactToGroupTest()
         {
-            GroupData group = GroupData.GetAll()[0];
+            if (!app.Groups.IsGroupPresent())
+            {
+                GroupData defData = new GroupData("def");
+                app.Groups.Create(defData);
+            }
+            GroupData group = GroupData.GetAll().FirstOrDefault();
+
             List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
+            ContactData contact = ContactData.GetAll().Except(oldList).FirstOrDefault();
+
+            if(contact == null)
+            {
+                contact = new ContactData { Firstname = "defTestFirstName2" };
+                app.Contacts.Create(contact);
+                contact = ContactData.GetAll().FirstOrDefault();
+            }
 
             app.Contacts.AddContactToGroup(contact, group);
 
