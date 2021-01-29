@@ -43,5 +43,10 @@ namespace mantis_tests
             }
         }
 
+        public void RefreshPage()
+        {
+            driver.Navigate().Refresh();
+        }
+
     }
 }

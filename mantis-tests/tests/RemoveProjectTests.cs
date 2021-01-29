@@ -22,17 +22,19 @@ namespace mantis_tests
                     Name = "testProjectName" + rnd.Next(1000),
                     Description = "testDescription" + rnd.Next(1000)
                 };
-                app.ManagMenu.InitProjectCreation();
-                app.PMHelper.CreateNewProject(project);
+                //app.ManagMenu.InitProjectCreation();
+                //app.PMHelper.CreateNewProject(project);
+                //app.ManagMenu.OpenProjectsListPage();
+                app.API.CreateNewProject(project);
                 app.ManagMenu.OpenProjectsListPage();
             }
-            
-            List<ProjectData> oldList = app.ManagMenu.GetProjectsList();
+
+            List<ProjectData> oldList = app.API.GetProjestsList();
             app.ManagMenu.OpenProjectPage(0);
             app.PMHelper.RemoveProject();
-            app.ManagMenu.OpenProjectsListPage();
-            Task.Delay(1000).Wait();
-            List<ProjectData> newList = app.ManagMenu.GetProjectsList();
+            //app.ManagMenu.OpenProjectsListPage();
+            //Task.Delay(1000).Wait();
+            List<ProjectData> newList = app.API.GetProjestsList();
             oldList.RemoveAt(0);
             Assert.AreEqual(oldList, newList);
 

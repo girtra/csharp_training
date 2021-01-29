@@ -23,12 +23,14 @@ namespace mantis_tests
 
             app.ManagMenu.OpenProjectsListPage();
 
-            List<ProjectData> oldList =  app.ManagMenu.GetProjectsList();
+           // List<ProjectData> oldList =  app.ManagMenu.GetProjectsList();
+           List<ProjectData> oldList = app.API.GetProjestsList();
 
             app.ManagMenu.InitProjectCreation();
             app.PMHelper.CreateNewProject(project);
-            app.ManagMenu.OpenProjectsListPage();
-            List<ProjectData> newList = app.ManagMenu.GetProjectsList();
+            //app.ManagMenu.OpenProjectsListPage();
+            List<ProjectData> newList = app.API.GetProjestsList();
+            //List<ProjectData> newList = app.ManagMenu.GetProjectsList();
             oldList.Add(project);
             oldList.Sort();
             newList.Sort();
@@ -46,8 +48,8 @@ namespace mantis_tests
             app.ManagMenu.OpenProjectsListPage();
             app.ManagMenu.InitProjectCreation();
             app.PMHelper.CreateNewProject(project);
-            app.ManagMenu.OpenProjectsListPage();
-            List<ProjectData> listAfterFirstCreation = app.ManagMenu.GetProjectsList();
+            //app.ManagMenu.OpenProjectsListPage();
+            List<ProjectData> listAfterFirstCreation = app.API.GetProjestsList();
 
             app.ManagMenu.OpenProjectsListPage();
             app.ManagMenu.InitProjectCreation();
@@ -56,11 +58,9 @@ namespace mantis_tests
 
             Assert.IsTrue(app.PMHelper.IsCreationError());
 
-            app.ManagMenu.OpenProjectsListPage();
-            List<ProjectData> listAfterSecondCreation = app.ManagMenu.GetProjectsList();
+            //app.ManagMenu.OpenProjectsListPage();
+            List<ProjectData> listAfterSecondCreation = app.API.GetProjestsList();
             Assert.AreEqual(listAfterFirstCreation, listAfterSecondCreation);
-
-
         }
 
     }

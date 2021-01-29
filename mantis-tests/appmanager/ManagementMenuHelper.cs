@@ -81,7 +81,7 @@ namespace mantis_tests
 
         public bool CheckProjectAvailability()
         {
-            List<ProjectData> list = GetProjectsList();
+            List<ProjectData> list = manager.API.GetProjestsList();
             return list.Count != 0;
         }
 
